@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar Usuario</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+          <a id="back" class="btn" href="/">Inicio</a></li>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1>Indica el DNI del Usuario a Eliminar</h1>
+            <form action="/deleteUser" method="post">
+                <article>
+                    <div id="cuerpo">
+                        <div class="registro">
+                            <label for="dni">DNI:</label>
+                            <input type="text" id="dni" name="dni" placeholder="00000000X" required>
+
+                        </div>
+                    </div>
+                </article>
+                <button class="btn" type="submit">Borrar</button>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

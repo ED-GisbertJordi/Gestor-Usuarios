@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Registro</title>
+    <meta name="description" content="HTML5">
+    <meta name="author" content="LM">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+          <a id="back" class="btn" href="/">Inicio</a></li>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1>Insertar Usuario</h1>
+            <p>Inserta un nuevo usuario en la Base de datos</p>
+            <form action="/addUser" method="post">
+
+                <article>
+                    <div id="cuerpo">
+                        <div class="registro">
+                            <label for="nombre" >Nombre: </label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Pepe" required>
+                        </div>
+                        <div class="registro">
+                            <label for="apellidos" >Apelidos: </label>
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Frances" required>
+                        </div>
+        
+                        <div class="registro">
+                            <label for="dni" >DNI: </label>
+                            <input type="text" id="dni" name="dni" placeholder="00000000X" required>
+                        </div>
+                        <div class="registro">
+                            <label for="email" >Email: </label>
+                            <input type="email" id="email" name="email" placeholder="pepe@francers.com" required>
+                        </div>
+                        <div class="registro">
+                            <label for="telefono" >Telefono: </label>
+                            <div id="tel">
+                                <select id="prefijo" name="prefijo" required>
+                                    <option hidden>+###</option>
+                                </select>
+                                <input type="number" id="telefono" name="telefono" placeholder="64545463536" required>
+                            </div>
+                        </div>
+                         <div class="registro">
+                            <label for="anyo" >Cumpleaños: </label>
+                            <input type="date" id="anyo" name="anyo" required>
+                        </div>
+                         <div class="registro">
+                            <label for="codPostal" >Código Postal: </label>
+                            <input type="number" id="codPostal" name="codPostal" placeholder="00000" required>
+                        </div>
+                         <div class="registro">
+                            <label for="password" >Contraseña: </label>
+                            <input type="password" id="password" name="password" placeholder="#Contraseña" required>
+                        </div>
+                         <div class="registro">
+                            <label for="confPassword" >Repetir Contraseña: </label>
+                            <input type="password" id="confPassword" name="confPassword" placeholder="#Contraseña" required>
+                        </div>
+                    </div>
+                </article>
+                <!-- ✔ / X -->
+                <!-- <span mostrar="true">👁</span> -->
+                <!-- Enviar -->
+                <button class="btn" type="submit">Enviar</button>
+                <article>
+                    <button class="btn btnParalelo" type="reset">Limpiar</button>
+                    <a href="/usuarios" class="btn btnParalelo">Usuarios</a>
+                </article>
+                
+
+            </form>
+        </section>
+    </main>
+    
+    <script src="../js/script.js"></script>
+
+</body>
+</html>

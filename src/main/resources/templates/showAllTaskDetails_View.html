@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Tarea</title>
+	<style>
+	        body {
+	            font-family: Arial, sans-serif;
+	            margin: 0;
+	            padding: 0;
+	            display: flex;
+	            justify-content: center;
+	            align-items: center;
+	            height: 100vh;
+	            background-color: #f4f4f4;
+	        }
+	        .container {
+	            background: white;
+	            padding: 20px;
+	            border-radius: 8px;
+	            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	        }
+	        form {
+	            display: flex;
+	            flex-direction: column;
+	        }
+	        label {
+	            margin-top: 10px;
+	        }
+	        input, textarea {
+	            padding: 10px;
+	            margin-top: 5px;
+	            border: 1px solid #ccc;
+	            border-radius: 4px;
+	        }
+	        button {
+	            margin-top: 20px;
+	            padding: 10px;
+	            border: none;
+	            background-color: #28a745;
+	            color: white;
+	            border-radius: 4px;
+	            cursor: pointer;
+	        }
+	        button:hover {
+	            background-color: #218838;
+	        }
+			table{
+				border: 1px solid rgb(33, 136, 56);
+				margin-bottom: 20px;
+			}
+			.even{
+			    background-color: rgb(222, 221, 218);
+			}
+			.odd{
+				background-color: rgb(192, 191, 188);
+			}
+	    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Listado de tareas</h1>
+			   
+		   <h2><span>Todas las tareas (Formato):</span></h2>
+   		   <table>
+   			<tr>​
+   				<th>CÓDIGO</th>​
+   			    <th>USUARIO</th>​
+   				<th>DESCRIPCIÓN</th>​
+   			    <th>REALIZADA</th>​
+   			    <th>FECHA VENCIMIENTO</th>​
+   				<th>HORA VENCIMIENTO</th>
+   			   </tr>
+   			<tr th:class="${item.Codigo % 2 == 0}? 'even' : 'odd'" th:each="item : ${todasTareas}">​
+   			      <td th:text="${item.Codigo}"></td>​
+   			      <td th:text="${item.Nombre}"></td>​
+   			      <td th:text="${item.Descripcion}"></td>​
+   				  <td th:text="${item.Realizada}"></td> 
+   			      <td th:text="${#temporals.format(item.FechaVencimiento, 'dd-MM-yyyy')}"></td>
+   				  <td th:text="${#temporals.format(item.HoraVencimiento, 'HH:mm')}"></td>​
+   			      <td><a th:href="@{/showTask(codigo=${item.Codigo}) }">Detalle</a></td>
+				  <td><a th:href="@{/deleteTask(codigo=${item.Codigo}) }">Borrar</a></td>​
+    		</tr>​
+   		   </table>
+		   
+		   
+		   
+		   <h2><span>Todas las tareas:</span></h2>
+		   <table>
+			<tr>​
+				<th>CÓDIGO</th>​
+			    <th>USUARIO</th>​
+				<th>DESCRIPCIÓN</th>​
+			    <th>REALIZADA</th>​
+			    <th>FECHA VENCIMIENTO</th>​
+				<th>HORA VENCIMIENTO</th>
+			   </tr>
+			<tr th:each="item : ${todasTareas}">​
+			      <td th:text="${item.Codigo}"></td>​
+			      <td th:text="${item.Nombre}"></td>​
+			      <td th:text="${item.Descripcion}"></td>​
+				  <td th:text="${item.Realizada}"></td> 
+			      <td th:text="${#temporals.format(item.FechaVencimiento, 'dd-MM-yyyy')}"></td>
+				  <td th:text="${#temporals.format(item.HoraVencimiento, 'HH:mm')}"></td>​
+				  <td><a th:href="@{/deleteTask(codigo=${item.Codigo}) }">Borrar</a></td>​
+ 			</tr>​
+		   </table>
+		   
+		   <!-- USO CONDICIONAL: -->
+		   <h2><span>Tareas filtradas por Nombre == Raul o Nombre == Pep</span></h2>
+		   <table>
+	   			<tr>​
+	   				<th>CÓDIGO</th>​
+	   			    <th>USUARIO</th>​
+	   				<th>DESCRIPCIÓN</th>​
+	   			    <th>REALIZADA</th>​
+	   			    <th>FECHA VENCIMIENTO</th>​
+	   				<th>HORA VENCIMIENTO</th>
+	   			</tr>
+	   			<tr th:each="item : ${todasTareas}" th:if="${item.Nombre} == 'Raul' or ${item.Nombre} == 'Pep' ">​
+   			      <td th:text="${item.Codigo}"></td>​
+   			      <td th:text="${item.Nombre}"></td>​
+   			      <td th:text="${item.Descripcion}"></td>​
+   				  <td th:text="${item.Realizada} ? 'SI' : 'NO' "></td> 
+   			      <td th:text="${#temporals.format(item.FechaVencimiento, 'dd-MM-yyyy')}"></td>
+   				  <td th:text="${#temporals.format(item.HoraVencimiento, 'HH:mm')}"></td>​
+				  <td><a th:href="@{/deleteTask(codigo=${item.Codigo}) }">Borrar</a></td>​
+	    		</tr>​
+   		   </table>
+		   
+			<h2><span>Tareas filtradas por nombre diferente de Raul</span></h2>
+			<table>
+	   			<tr>​
+	   				<th>CÓDIGO</th>​
+	   			    <th>USUARIO</th>​
+	   				<th>DESCRIPCIÓN</th>​
+	   			    <th>REALIZADA</th>​
+	   			    <th>FECHA VENCIMIENTO</th>​
+	   				<th>HORA VENCIMIENTO</th>
+	   			   </tr>
+	   			<tr th:each="item : ${todasTareas}" th:unless="${item.Nombre} == 'Raul' ">​
+	   			      <td th:text="${item.Codigo}"></td>​
+	   			      <td th:text="${item.Nombre}"></td>​
+	   			      <td th:text="${item.Descripcion}"></td>​
+	   				  <td th:text="${item.Realizada} ? 'SI' : 'NO' "></td> 
+	   			      <td th:text="${#temporals.format(item.FechaVencimiento, 'dd-MM-yyyy')}"></td>
+	   				  <td th:text="${#temporals.format(item.HoraVencimiento, 'HH:mm')}"></td>​
+					  <td><a th:href="@{/deleteTask(codigo=${item.Codigo}) }">Borrar</a></td>​
+	    			</tr>​
+			</table>
+				   
+
+		   <a th:href="@{/}">Volver al menú</a>​
+    </div>
+</body>
+</html>
