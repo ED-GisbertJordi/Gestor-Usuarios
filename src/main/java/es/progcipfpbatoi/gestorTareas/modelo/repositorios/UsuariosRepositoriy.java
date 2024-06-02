@@ -1,5 +1,6 @@
 package es.progcipfpbatoi.gestorTareas.modelo.repositorios;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,9 +48,9 @@ public class UsuariosRepositoriy {
 
 
     public void init() {
-        Usuario[] u1 = {new Usuario("Jordi", "Gisbert", "20527193S", "jota.gvg@gmail.com", "666666666", null, null, null), 
-                        new Usuario("Pepe", "Gisbert", "20527192S", "jota.gvg@gmail.com", "666666666", null, null, null), 
-                        new Usuario("Pedro", "Gisbert", "20527191S", "jota.gvg@gmail.com", "666666666", null, null, null)};
+        Usuario[] u1 = {new Usuario("Jordi", "Gisbert", "20527193S", "jota.gvg@gmail.com", "+34", "666666666", LocalDate.now(), "03410", "hola1234"), 
+                        new Usuario("Pepe", "Gisbert", "20527192S", "pedro@gmail.com", "+34", "666666666", LocalDate.now(), "11111", "hola1234"), 
+                        new Usuario("Pedro", "Gisbert", "20527191S", "pepe@gmail.com","+34", "666666666", LocalDate.now(), "01111", "hola1234")};
         for (Usuario u : u1) {
             this.addUsuario(u);
         }

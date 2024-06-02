@@ -59,19 +59,22 @@ public class UsuarioController {
 
     // Mostara el formulario para borrar un usuario
     @GetMapping("/borrar")  
-    private String deleteUser() {
+    private String deleteUser(@RequestParam Map<String, String> params, Model model) {
+		model.addAttribute("dni", params.get("dni"));
         return "borrarUsuario";
     }
 
     // Mostara el formulario para buscar un usuario
     @GetMapping("/buscar")  
-    private String searchUsario() {
-        return "buscarUsario";
+    private String searchUsario(@RequestParam Map<String, String> params, Model model) {
+		model.addAttribute("dni", params.get("dni"));
+		return "buscarUsario";
     }
     
     // Mostrara el listado de usuarios
     @GetMapping("/listar")  
-    private String getUsarios() {
+    private String getUsarios(Model model) {
+		model.addAttribute("usuarios", usuariosRepo.getTodosUsuarios());
         return "listaUsuarios";
     }
 
@@ -99,7 +102,7 @@ public class UsuarioController {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         
 		//Creación del Usuario
-		Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo + telefono, LocalDate.parse(fechaNacimiento), codPostal, password);
+		Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo, telefono, LocalDate.parse(fechaNacimiento), codPostal, password);
 		usuariosRepo.addUsuario(u);
         System.out.println("Exito creando: " + u.toString());
 		
@@ -108,7 +111,7 @@ public class UsuarioController {
 	}
 
 
-
+	// Borrar Post
     @ResponseBody
 	@PostMapping("/deleteUser")
 	private String postDeleteUser(@RequestParam Map<String, String> params) {
@@ -126,14 +129,15 @@ public class UsuarioController {
 		}
 	}
 
-    @ResponseBody
+
 	@PostMapping("/searchUser")
-	private String postSearchUser(@RequestParam Map<String, String> params) {
+	private String postSearchUser(@RequestParam Map<String, String> params, Model model) {
 		String dni = String.valueOf(params.get("dni"));
 		Usuario usuario = usuariosRepo.getUsuario(dni);
 		
 		if(usuariosRepo.existeUsuario(dni)) {
-			return "<html><body><h1>Usuarios con DNI: " + usuario.getDni() + " Encontrado</h1></body></html>";
+			model.addAttribute("usuario", usuario);
+			return "detallesUsuario";
 		}else {
 			return "<html><body><h1>No se ha encontrado el Usuariocon DNI: " + dni + "</h1></body></html>";
 		}
@@ -180,17 +184,6 @@ public class UsuarioController {
 		model.addAttribute("t", tareabuscada);
 		
 		return "showTaskDetails_View";
-	}
-	
-	
-
-	//Esto ha sido necesario añadirlo para implementar la redirección (GET)
-	@GetMapping("/showAllTasks")  
-	private String mostrarTodasTareas(Model model) {
-		
-		model.addAttribute("todasTareas", tareaRepo.getTodasTareas());
-		
-		return "showAllTaskDetails_View";
 	}
 
 

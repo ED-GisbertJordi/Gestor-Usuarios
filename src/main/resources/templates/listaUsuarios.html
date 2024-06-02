@@ -35,25 +35,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Jordi Gisbert</td>
-                            <td>jordi@gisbert.com</td>
-                            <td>17/03/2005</td>
-                            <td>03410</td>
+                        <tr th:each="item : ${usuarios}">
+                            <td th:text="${item.nombre}"></td>
+                            <td th:text="${item.email}"></td>
+                            <td th:text="${#temporals.format(item.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${item.codPostal}"></td>
                             <td>
                                 <div class="btnsUser">
                                     <article>
-                                        <a href="#" class="btn btnPequenyo">Ver detalles</a>
+                                        <a th:href="@{/buscar?dni={dni}(dni=${item.dni})}" class="btn btnPequenyo">Ver detalles</a>
                                     </article>
                                     <article>
-                                        <a href="#" class="btn btnPequenyo" >Borrar</a></div>
+                                        <a th:href="@{/borrar?dni={dni}(dni=${item.dni})}" class="btn btnPequenyo" >Borrar</a></div>
                                     </article>
                                     
                                 </div>
                             </td>
                         </tr>
                     </tbody>
-
 
                 </table>
             </article>

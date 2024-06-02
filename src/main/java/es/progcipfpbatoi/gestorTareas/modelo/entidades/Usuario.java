@@ -8,17 +8,19 @@ public class Usuario {
     private String nombre;
     private String apellidos;
     private String email;
+    private String prefijo;
     private String telefono;
     private LocalDate fechaNacimiento;
     private String codPostal;
     private String password;
     
-    public Usuario(String nombre, String apellidos, String dni, String email, String telefono, LocalDate fechaNacimiento, String codPostal, String password) {
+    public Usuario(String nombre, String apellidos, String dni, String email, String prefijo, String telefono, LocalDate fechaNacimiento, String codPostal, String password) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
         this.codPostal = codPostal;
+        this.prefijo = prefijo;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.password = password;
@@ -38,6 +40,10 @@ public class Usuario {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPrefijo() {
+        return prefijo;
     }
 
     public String getTelefono() {

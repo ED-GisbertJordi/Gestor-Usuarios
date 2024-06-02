@@ -20,7 +20,7 @@
                     <div id="cuerpo">
                         <div class="registro">
                             <label for="dni">DNI:</label>
-                            <input type="text" id="dni" name="dni" placeholder="00000000X" required>
+                            <input type="text" id="dni" name="dni" placeholder="00000000X" required th:value="${dni}">
 
                         </div>
                     </div>
@@ -29,6 +29,12 @@
             </form>
         </section>
     </main>
-    
+    <script th:if="${dni != null}">
+        // Esperar a que la página se cargue completamente
+        document.addEventListener("DOMContentLoaded", function() {
+            // Enviar el formulario automáticamente
+            document.querySelector("form").submit();
+        });
+    </script>
 </body>
 </html>
