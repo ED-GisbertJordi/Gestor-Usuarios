@@ -8,11 +8,14 @@ import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import es.progcipfpbatoi.gestorTareas.modelo.entidades.Usuario;
+import es.progcipfpbatoi.gestorTareas.modelo.entidades.Validator;
 import es.progcipfpbatoi.gestorTareas.modelo.repositorios.UsuariosRepositoriy;
 
 
@@ -75,14 +78,12 @@ public class UsuarioController {
 
     // Logica de los formularios
     // Insertar un usuario
-    @ResponseBody
     @PostMapping("/addUser")
-	private String postAddUser(@RequestParam Map<String, String> params) {
-		
+    public ResponseEntity<String> postAddUser(@RequestParam Map<String, String> params) {
         // Datos del usuario
         String nombre = params.get("nombre");
         String apellidos = params.get("apellidos");
-		String dni = String.valueOf(params.get("dni"));
+        String dni = params.get("dni");
         String email = params.get("email");
         String prefijo = params.get("prefijo");
         String telefono = params.get("telefono");
@@ -91,19 +92,55 @@ public class UsuarioController {
         String password = params.get("password");
         String confPassword = params.get("confPassword");
 
-		
-		// Fecha de Nacimiento
-		DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        
-		//Creación del Usuario
-		Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo, telefono, LocalDate.parse(fechaNacimiento), codPostal, password);
-		usuariosRepo.addUsuario(u);
-        System.out.println("Exito creando: " + u.toString());
-		
-		String respuestaHtml = "<html>" + "<body> Usuario " + u.getDni() + " recibida con exito</body></html>";
-		return respuestaHtml;
-	}
+		String error = "";
+        // Validación de campos
+        if (!Validator.isValidNameAndSurname(nombre)) {
+            error += "Nombre inválido";
+        }
+        if (!Validator.isValidNameAndSurname(apellidos)) {
+            error += "Apellidos inválidos";
+        }
+        if (!Validator.isValidDNI(dni)) {
+            error += "DNI inválido";
+        }
+        if (!Validator.isValidEmail(email)) {
+            error += "Email inválido";
+        }
+        if (!Validator.isValidSpanishMobileNumber(telefono)) {
+            error += "Teléfono inválido";
+        }
+        if (!Validator.isValidSpanishPostalCode(codPostal)) {
+            error += "Código postal inválido";
+        }
+        if (!Validator.isValidPassword(password) || !password.equals(confPassword)) {
+            error += "Contraseña inválida o no coincide con la confirmación";
+        }
 
+        // Fecha de Nacimiento
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        if (error.isEmpty()) {
+			
+		}
+		
+		//Creación del Usuario
+        Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo, telefono, LocalDate.parse(fechaNacimiento), codPostal, password);
+        usuariosRepo.addUsuario(u);
+        System.out.println("Exito creando: " + u.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario creado con éxito");
+    }
+
+
+	/*
+	html de error
+	<script th:if="${error != null}">
+        // Esperar a que la página se cargue completamente
+        document.addEventListener("DOMContentLoaded", function() {
+            // Enviar el formulario automáticamente
+            alert("Error: " + "${error}");
+        });
+    </script>
+	 */
 
 	// Borrar Post
     @ResponseBody

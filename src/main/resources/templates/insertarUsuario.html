@@ -81,7 +81,14 @@
         </section>
     </main>
     
-    <script src="../js/script.js"></script>
+    <!-- <script src="../js/script.js"></script> -->
+    <script th:if="${error != null}">
+        // Esperar a que la página se cargue completamente
+        document.addEventListener("DOMContentLoaded", function() {
+            // Enviar el formulario automáticamente
+            alert("Error: " + "${error}");
+        });
+    </script>
 
 </body>
 </html>
