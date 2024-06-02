@@ -12,14 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import es.progcipfpbatoi.gestorTareas.modelo.entidades.Prioridad;
-import es.progcipfpbatoi.gestorTareas.modelo.entidades.Tarea;
 import es.progcipfpbatoi.gestorTareas.modelo.entidades.Usuario;
 import es.progcipfpbatoi.gestorTareas.modelo.repositorios.UsuariosRepositoriy;
-
-import es.progcipfpbatoi.gestorTareas.modelo.entidades.Prioridad;
-import es.progcipfpbatoi.gestorTareas.modelo.entidades.Tarea;
-import es.progcipfpbatoi.gestorTareas.modelo.repositorios.TareaRepository;
 
 
 
