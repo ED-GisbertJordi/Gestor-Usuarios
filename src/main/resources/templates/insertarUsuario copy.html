@@ -25,44 +25,44 @@
                     <div id="cuerpo">
                         <div class="registro">
                             <label for="nombre">Nombre: </label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Pepe" required th:value="${usuario.nombre ?: ''}">
+                            <input type="text" id="nombre" name="nombre" placeholder="Pepe" required>
                         </div>
                         <div class="registro">
                             <label for="apellidos">Apellidos: </label>
-                            <input type="text" id="apellidos" name="apellidos" placeholder="Frances" required th:value="${usuario.apellidos ?: ''}">
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Frances" required>
                         </div>
                         <div class="registro">
                             <label for="dni">DNI: </label>
-                            <input type="text" id="dni" name="dni" placeholder="00000000X" required th:value="${usuario.dni ?: ''}">
+                            <input type="text" id="dni" name="dni" placeholder="00000000X" required>
                         </div>
                         <div class="registro">
                             <label for="email">Email: </label>
-                            <input type="email" id="email" name="email" placeholder="pepe@francers.com" required th:value="${usuario.email ?: ''}">
+                            <input type="email" id="email" name="email" placeholder="pepe@francers.com" required>
                         </div>
                         <div class="registro">
                             <label for="telefono">Teléfono: </label>
                             <div id="tel">
                                 <select id="prefijo" name="prefijo" required>
-                                    <option th:text="${usuario.prefijo} ?: '+###'"></option>
+                                    <option>+###</option>
                                 </select>
-                                <input type="number" id="telefono" name="telefono" placeholder="64545463536" required th:value="${usuario.telefono ?: ''}">
+                                <input type="number" id="telefono" name="telefono" placeholder="64545463536" required>
                             </div>
                         </div>
                          <div class="registro">
                             <label for="anyo">Cumpleaños: </label>
-                            <input type="date" id="anyo" name="anyo" required th:value="${usuario.anyo ?: ''}">
+                            <input type="date" id="anyo" name="anyo" required>
                         </div>
                          <div class="registro">
                             <label for="codPostal">Código Postal: </label>
-                            <input type="number" id="codPostal" name="codPostal" placeholder="00000" required th:value="${usuario.codPostal ?: ''}">
+                            <input type="number" id="codPostal" name="codPostal" placeholder="00000" required>
                         </div>
                          <div class="registro">
                             <label for="password">Contraseña: </label>
-                            <input type="password" id="password" name="password" placeholder="#Contraseña" required th:value="${usuario.password ?: ''}">
+                            <input type="password" id="password" name="password" placeholder="#Contraseña" required>
                         </div>
                          <div class="registro">
                             <label for="confPassword">Repetir Contraseña: </label>
-                            <input type="password" id="confPassword" name="confPassword" placeholder="#Contraseña" required th:value="${usuario.confPassword ?: ''}">
+                            <input type="password" id="confPassword" name="confPassword" placeholder="#Contraseña" required>
                         </div>
                     </div>
                 </article>
@@ -80,8 +80,8 @@
     </main>
     
     <!-- Mostrar mensaje de error -->
-    <div th:if="${usuario.error}" class="aletaError">
-        <p th:text="${usuario.error}"></p>
+    <div class="aletaError">
+        <p></p>
     </div>
     <!-- <script src="../js/script.js"></script> -->
 

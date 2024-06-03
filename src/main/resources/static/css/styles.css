@@ -280,6 +280,14 @@ button.opcion{
     }
 }
 
+.aletaError{
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: red;
+    color: aliceblue;
+}
+
 
 .check{
     width: 20px;

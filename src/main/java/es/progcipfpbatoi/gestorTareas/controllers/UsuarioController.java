@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.progcipfpbatoi.gestorTareas.modelo.entidades.Usuario;
 import es.progcipfpbatoi.gestorTareas.modelo.entidades.Validator;
@@ -49,10 +51,65 @@ public class UsuarioController {
 	}
 
     // Mostrara el formulario para insertar un usuario
+    // @GetMapping("/insertar")  
+    // private String addUsuarios() {
+    //     return "insertarUsuario copy";
+    // }
+
+	
+	// Mostrara el formulario para insertar un usuario
     @GetMapping("/insertar")  
-    private String addUsuarios() {
+    private String addUsuarios(@RequestParam Map<String, String> params, Model model) {
+
+		
+		if (params.get("nombre") == null) {
+			params.put("nombre", "");
+		}
+
+		if (params.get("apellidos") == null) {
+			params.put("apellidos", "");
+		}
+
+		if (params.get("dni") == null) {
+			params.put("dni", "");
+		}
+
+		if (params.get("email") == null) {
+			params.put("email", "");
+		}
+
+		if (params.get("prefijo") == null) {
+			params.put("prefijo", "");
+		}
+
+		if (params.get("telefono") == null) {
+			params.put("telefono", "");
+		}
+
+		if (params.get("anyo") == null) {
+			params.put("anyo", "");
+		}
+
+		if (params.get("codPostal") == null) {
+			params.put("codPostal", "");
+		}
+
+		if (params.get("password") == null) {
+			params.put("password", "");
+		}
+
+		if (params.get("confPassword") == null) {
+			params.put("confPassword", "");
+		}
+		
+		if (params.get("error") == null) {
+			params.put("error", "");
+		}
+
+        model.addAttribute("usuario", params);
         return "insertarUsuario";
     }
+	
 
     // Mostara el formulario para borrar un usuario
     @GetMapping("/borrar")  
@@ -79,68 +136,70 @@ public class UsuarioController {
     // Logica de los formularios
     // Insertar un usuario
     @PostMapping("/addUser")
-    public ResponseEntity<String> postAddUser(@RequestParam Map<String, String> params) {
-        // Datos del usuario
-        String nombre = params.get("nombre");
-        String apellidos = params.get("apellidos");
-        String dni = params.get("dni");
-        String email = params.get("email");
-        String prefijo = params.get("prefijo");
-        String telefono = params.get("telefono");
-        String fechaNacimiento = params.get("anyo");
-        String codPostal = params.get("codPostal");
-        String password = params.get("password");
-        String confPassword = params.get("confPassword");
+	public String postAddUser(@RequestParam Map<String, String> params, RedirectAttributes redirectAttributes) {
+		// Datos del usuario
+		String nombre = params.get("nombre");
+		String apellidos = params.get("apellidos");
+		String dni = params.get("dni");
+		String email = params.get("email");
+		String prefijo = params.get("prefijo");
+		String telefono = params.get("telefono");
+		String fechaNacimiento = params.get("anyo");
+		String codPostal = params.get("codPostal");
+		String password = params.get("password");
+		String confPassword = params.get("confPassword");
 
-		String error = "";
-        // Validación de campos
-        if (!Validator.isValidNameAndSurname(nombre)) {
-            error += "Nombre inválido";
-        }
-        if (!Validator.isValidNameAndSurname(apellidos)) {
-            error += "Apellidos inválidos";
-        }
-        if (!Validator.isValidDNI(dni)) {
-            error += "DNI inválido";
-        }
-        if (!Validator.isValidEmail(email)) {
-            error += "Email inválido";
-        }
-        if (!Validator.isValidSpanishMobileNumber(telefono)) {
-            error += "Teléfono inválido";
-        }
-        if (!Validator.isValidSpanishPostalCode(codPostal)) {
-            error += "Código postal inválido";
-        }
-        if (!Validator.isValidPassword(password) || !password.equals(confPassword)) {
-            error += "Contraseña inválida o no coincide con la confirmación";
-        }
+		String error = "HOla";
+		params.put("error", error);
+		redirectAttributes.addFlashAttribute("usuario", params);
 
-        // Fecha de Nacimiento
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        if (error.isEmpty()) {
-			
+			// Redirigir de nuevo al formulario con los errores
+		return "redirect:/insertar";
+		/*
+		// Validación de campos
+		if (!Validator.isValidNameAndSurname(nombre)) {
+			error += "Nombre inválido. ";
 		}
-		
-		//Creación del Usuario
-        Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo, telefono, LocalDate.parse(fechaNacimiento), codPostal, password);
-        usuariosRepo.addUsuario(u);
-        System.out.println("Exito creando: " + u.toString());
+		if (!Validator.isValidNameAndSurname(apellidos)) {
+			error += "Apellidos inválidos. ";
+		}
+		if (!Validator.isValidDNI(dni)) {
+			error += "DNI inválido. ";
+		}
+		if (!Validator.isValidEmail(email)) {
+			error += "Email inválido. ";
+		}
+		if (!Validator.isValidSpanishMobileNumber(telefono)) {
+			error += "Teléfono inválido. ";
+		}
+		if (!Validator.isValidSpanishPostalCode(codPostal)) {
+			error += "Código postal inválido. ";
+		}
+		if (!Validator.isValidPassword(password) || !password.equals(confPassword)) {
+			error += "Contraseña inválida o no coincide con la confirmación. ";
+		}
 
-        return ResponseEntity.status(HttpStatus.OK).body("Usuario creado con éxito");
-    }
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		// Agregar el mensaje de error al mapa de parámetros si existe
+		if (!error.isEmpty()) {
+			params.put("error", error);
+			redirectAttributes.addFlashAttribute("usuario", params);
+
+			// Redirigir de nuevo al formulario con los errores
+			return "redirect:/insertar";
+		}
+
+		// Creación del Usuario
+		Usuario u = new Usuario(nombre, apellidos, dni, email, prefijo, telefono, LocalDate.parse(fechaNacimiento, formato), codPostal, password);
+		usuariosRepo.addUsuario(u);
+		System.out.println("Éxito creando: " + u.toString());
+
+		return "redirect:/success";
+		*/
+	}
 
 
-	/*
-	html de error
-	<script th:if="${error != null}">
-        // Esperar a que la página se cargue completamente
-        document.addEventListener("DOMContentLoaded", function() {
-            // Enviar el formulario automáticamente
-            alert("Error: " + "${error}");
-        });
-    </script>
-	 */
 
 	// Borrar Post
     @ResponseBody
