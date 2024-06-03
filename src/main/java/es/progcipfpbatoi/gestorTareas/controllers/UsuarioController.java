@@ -142,18 +142,9 @@ public class UsuarioController {
 		String confPassword = params.get("confPassword");
 
 		String error = "HOla";
-		params.put("error", error);
 		
-		String parametros = "";
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			parametros += entry.getKey() + "=" + entry.getValue()+"&&";
-		}
-
-
-			// Redirigir de nuevo al formulario con los errores
-		return "redirect:/insertar?"+parametros+"error="+error;
 		//http://localhost:8080/insertar?nombre=hola&&apellidos=a&&dni=a&&email=asd@vb&&prefijo=a&&telefono=1&&anyo=2024-05-29&&codPostal=11111&&password=a&&confPassword=a&&error=HOla&&error=HOla
-		/*
+		
 		// Validación de campos
 		if (!Validator.isValidNameAndSurname(nombre)) {
 			error += "Nombre inválido. ";
@@ -180,12 +171,17 @@ public class UsuarioController {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		// Agregar el mensaje de error al mapa de parámetros si existe
-		if (!error.isEmpty()) {
+		if (error != "") {
 			params.put("error", error);
-			redirectAttributes.addFlashAttribute("usuario", params);
+		
+			String parametros = "";
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				parametros += entry.getKey() + "=" + entry.getValue()+"&&";
+			}
+
 
 			// Redirigir de nuevo al formulario con los errores
-			return "redirect:/insertar";
+			return "redirect:/insertar?"+parametros+"error="+error;
 		}
 
 		// Creación del Usuario
@@ -193,8 +189,7 @@ public class UsuarioController {
 		usuariosRepo.addUsuario(u);
 		System.out.println("Éxito creando: " + u.toString());
 
-		return "redirect:/success";
-		*/
+		return "redirect:/insertar";
 	}
 
 
