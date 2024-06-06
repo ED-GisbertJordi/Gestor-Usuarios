@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let inPassword = document.querySelector('#password');
     let inConfPassword = document.querySelector('#confPassword');
     ponerBotonsMostrarContrasenya();
-
+    let btnError = document.querySelector('#btnError');
 
     // Empieza el flujo
     if (inNombre.value == '') {
@@ -52,21 +52,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Eventos de Validacion
-    inNombre.addEventListener('blur', validarNombre);
-    inApellidos.addEventListener('blur', validarApellidos);
-    inDNI.addEventListener('blur', validarDNI);
-    inEmail.addEventListener('blur', validarEmail);
-    inPrefijo.addEventListener('input', cambiarFocoTelefono)
-    inTelefono.addEventListener('click', validarPrefijo)
-    inTelefono.addEventListener('blur', validarTelefono)
-    inCumpleanyos.addEventListener('input', cambiarColorFecha);
-    inCumpleanyos.addEventListener('blur', validarCumpleanyos);
-    maxFecha(inCumpleanyos);
-    inCodPostal.addEventListener('blur', validarCodPostal);
+    // inNombre.addEventListener('blur', validarNombre);
+    // inApellidos.addEventListener('blur', validarApellidos);
+    // inDNI.addEventListener('blur', validarDNI);
+    // inEmail.addEventListener('blur', validarEmail);
+    // inPrefijo.addEventListener('input', cambiarFocoTelefono)
+    // inTelefono.addEventListener('click', validarPrefijo)
+    // inTelefono.addEventListener('blur', validarTelefono)
+    // inCumpleanyos.addEventListener('input', cambiarColorFecha);
+    // inCumpleanyos.addEventListener('blur', validarCumpleanyos);
+    // maxFecha(inCumpleanyos);
+    // inCodPostal.addEventListener('blur', validarCodPostal);
     inPassword.addEventListener('focus', ponerGuiaPassword);
     inPassword.addEventListener('input', guiaPassword);
-    inPassword.addEventListener('blur', validarPassword);
-    inConfPassword.addEventListener('blur', validarConfPassword);
+    // inPassword.addEventListener('blur', validarPassword);
+    // inConfPassword.addEventListener('blur', validarConfPassword);
+    btnError.addEventListener('click', ocultarError);
 
 
 
@@ -631,6 +632,11 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('resize', function(event) {
         moverBtnMostrar();
     });
+
+
+    function ocultarError() {
+        document.querySelector('#formError').classList.add('oculto');
+    }
 
 
 })

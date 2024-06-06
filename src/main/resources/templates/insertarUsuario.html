@@ -72,7 +72,7 @@
                 <button class="btn" type="submit">Enviar</button>
                 <article>
                     <button class="btn btnParalelo" type="reset">Limpiar</button>
-                    <a href="/usuarios" class="btn btnParalelo">Usuarios</a>
+                    <a href="/listar" class="btn btnParalelo">Usuarios</a>
                 </article>
 
             </form>
@@ -80,10 +80,11 @@
     </main>
     
     <!-- Mostrar mensaje de error -->
-    <div th:if="${usuario.error}" class="aletaError">
+    <div th:classappend="${usuario.error!=''} ? 'alertaError' : 'alertaError oculto'" id="formError">
+        <input type="button" class="btnError" value="X">
         <p th:text="${usuario.error}"></p>
-    </div>
-    <!-- <script src="../js/script.js"></script> -->
+    </div>    
+    <script src="../js/script.js"></script>
 
 </body>
 </html>

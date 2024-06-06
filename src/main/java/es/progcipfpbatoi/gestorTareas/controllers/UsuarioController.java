@@ -141,28 +141,31 @@ public class UsuarioController {
 		String password = params.get("password");
 		String confPassword = params.get("confPassword");
 
-		String error = "HOla";
+		String error = "";
 		
 		//http://localhost:8080/insertar?nombre=hola&&apellidos=a&&dni=a&&email=asd@vb&&prefijo=a&&telefono=1&&anyo=2024-05-29&&codPostal=11111&&password=a&&confPassword=a&&error=HOla&&error=HOla
 		
 		// Validación de campos
 		if (!Validator.isValidNameAndSurname(nombre)) {
-			error += "Nombre inválido. ";
+			error += "Nombre invalido. ";
 		}
 		if (!Validator.isValidNameAndSurname(apellidos)) {
-			error += "Apellidos inválidos. ";
+			error += "Apellidos invalidos. ";
 		}
 		if (!Validator.isValidDNI(dni)) {
-			error += "DNI inválido. ";
+			error += "DNI invalido. ";
 		}
 		if (!Validator.isValidEmail(email)) {
-			error += "Email inválido. ";
+			error += "Email invalido. ";
+		}
+		if (!Validator.isValidSpanishMobilePrefix(prefijo)) {
+			error += "Prefijo invalido. ";
 		}
 		if (!Validator.isValidSpanishMobileNumber(telefono)) {
-			error += "Teléfono inválido. ";
+			error += "Teléfono invalido. ";
 		}
 		if (!Validator.isValidSpanishPostalCode(codPostal)) {
-			error += "Código postal inválido. ";
+			error += "Código postal invalido. ";
 		}
 		if (!Validator.isValidPassword(password) || !password.equals(confPassword)) {
 			error += "Contraseña inválida o no coincide con la confirmación. ";
@@ -195,9 +198,8 @@ public class UsuarioController {
 
 
 	// Borrar Post
-    @ResponseBody
 	@PostMapping("/deleteUser")
-	private String postDeleteUser(@RequestParam Map<String, String> params) {
+	private String postDeleteUser(@RequestParam Map<String, String> params, Model model) {
 		String dni = String.valueOf(params.get("dni"));
 		Usuario usuario = usuariosRepo.getUsuario(dni);
 		
@@ -205,14 +207,16 @@ public class UsuarioController {
 			
 			//Eliminar el Usuario:
 			usuariosRepo.deleteUsuario(dni);
-			
-			return "<html><body><h1>Usuarios con DNI: " + usuario.getDni() + " Eliminado</h1></body></html>";
+			model.addAttribute("mensaje", dni);
+			return "exsitoso";
 		}else {
-			return "<html><body><h1>No se ha encontrado el Usuariocon DNI: " + dni + "</h1></body></html>";
+			model.addAttribute("error", "No se ha encontrado el Usuario con DNI: " + dni);
+			return "error";
 		}
 	}
 
 
+	// Buscar Post
 	@PostMapping("/searchUser")
 	private String postSearchUser(@RequestParam Map<String, String> params, Model model) {
 		String dni = String.valueOf(params.get("dni"));
@@ -222,65 +226,10 @@ public class UsuarioController {
 			model.addAttribute("usuario", usuario);
 			return "detallesUsuario";
 		}else {
-			return "<html><body><h1>No se ha encontrado el Usuariocon DNI: " + dni + "</h1></body></html>";
+			model.addAttribute("error", "No se ha encontrado el Usuario con DNI: " + dni);
+			return "error";
 		}
 	}
-
-    /*
-	
-	
-	@GetMapping("/deleteTask")
-	private String getEraseAction(@RequestParam Map<String, String> params) {
-		
-		int codigo = Integer.parseInt(params.get("codigo"));
-		
-		Tarea tarea = tareaRepo.getTarea(codigo);
-		
-		if(tarea != null) {
-			//Eliminar la tarea:
-			tareaRepo.deleteTarea(codigo);
-		}
-		
-		return "redirect:/showAllTasks";
-	}
-	
-	
-	@PostMapping("/showTask")
-	private String showTaskAction(@RequestParam Map<String, String> params, Model model) {
-		
-		int codigo = Integer.parseInt(params.get("codigo"));
-		
-		Tarea tareabuscada = tareaRepo.getTarea(codigo);
-		
-		model.addAttribute("t", tareabuscada);
-		
-		return "showTaskDetails_View";
-	}
-	
-	@GetMapping("/showTask")
-	private String showTaskActionRedirection(@RequestParam Map<String, String> params, Model model) {
-		
-		int codigo = Integer.parseInt(params.get("codigo"));
-		
-		Tarea tareabuscada = tareaRepo.getTarea(codigo);
-		
-		model.addAttribute("t", tareabuscada);
-		
-		return "showTaskDetails_View";
-	}
-
-
-
-
-
-
-
-
-
-*/
-
-
-
 
 
 
