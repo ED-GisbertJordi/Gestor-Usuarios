@@ -192,7 +192,7 @@ public class UsuarioController {
 		usuariosRepo.addUsuario(u);
 		System.out.println("Éxito creando: " + u.toString());
 
-		return "redirect:/insertar";
+		return "redirect:/listar";
 	}
 
 

@@ -81,7 +81,7 @@
     
     <!-- Mostrar mensaje de error -->
     <div th:classappend="${usuario.error!=''} ? 'alertaError' : 'alertaError oculto'" id="formError">
-        <input type="button" class="btnError" value="X">
+        <input type="button" value="X" id="btnError">
         <p th:text="${usuario.error}"></p>
     </div>    
     <script src="../js/script.js"></script>

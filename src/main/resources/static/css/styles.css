@@ -281,7 +281,7 @@ button.opcion{
     }
 }
 
-.btnError{
+#btnError{
     font-size: 25px;
     border-radius: 50%;
     width: 60px;
@@ -293,7 +293,7 @@ button.opcion{
     transition: all 0.4s;
 }
 
-.btnError:hover{
+#btnError:hover{
     color: var(--error-secundario);
     background-color: var(--error);
     box-shadow: inset 0px 0px 10px 5px var(--error-secundario);
